@@ -1,0 +1,6 @@
+en faisant un: cat /etc/passwd  , on remarque que le mot de passe crypté du
+user flag01 est visible. Donc on copie le fichier sur notre machine via la commande:
+scp -P 4242 level00@[ip]:/etc/passwd .
+une fois sur a machine on bruteforce le fichier avec la commande:
+john --show paswd
+et on obtient le mod de passe suivant: abcdefg

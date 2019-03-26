@@ -1,0 +1,7 @@
+Tout d'abord, il faut chercher le fichier dont parle le README (sur la video)
+avec la commande suivante: find / -user flag00 2> /dev/null | grep -v 'proc'
+On obtient deux fichiers qui contienne chacun le mot de passe offusque:
+cdiiddwpgswtgt
+ensuite il suffit de mettre le mot sur le site https://md5decrypt.net/Cesar/
+et de lancer le "bruteforce" pour tester toutes les combinaisons existantes
+et on remarque au decalage numero 15 le mot de passe desoffusque: nottoohardhere

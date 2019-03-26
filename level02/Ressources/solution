@@ -1,0 +1,11 @@
+Pour commencer, on copie le fichier level02.pcap sur notre machine comme vu precedement
+puis on le met sur l'upload sur le site https://www.cloudshark.org/captures
+Une fois sur l'analyse du fichier, on va aller cliquer en haut de la page sur
+Analysis Tools puis sur Follow Stream. On peut y voir clairement ecris:
+Password:
+ft_wandr...NDRel.L0L
+du coup on veut regarder a quoi corresponde vraiment les charactere en point en
+cliquant sur Hex Dump et on remarque que les points sont en fait des 0x7f ([DEL])
+donc on va supprimer des charactere lorsqu'on rencontre ces 0x7f (on remarque
+aussi que le O de LOL est en fait un 0) et on obtient donc le mot de passe:
+ft_waNDReL0L
