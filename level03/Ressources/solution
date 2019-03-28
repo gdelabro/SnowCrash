@@ -1,0 +1,10 @@
+Pour cet exercice, on utilise nm pour regarder les symboles du binaire et on
+se rend compte que le binaire utilise la fonction appelée system().
+Ensuite, en faisant un cat sur ce meme fichier, on s'apercois qu'au milieu,
+il y a ecris: echo Exploit me
+Donc on va creer un dossier dans /tmp dans lequel on va executer la commande:
+ln -s /bin/getflag echo
+ensuite on va modifier la variable PATH de l'environnement pour que le shell
+aille chercher les binaires en premier dans notre dossier et vu que le le binaire
+appartient a flag03, quand on va le lancer, le user flag03 va executer la commande
+getflag
