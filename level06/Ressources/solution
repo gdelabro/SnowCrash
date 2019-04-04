@@ -1,0 +1,23 @@
+Dans un premier temps, on remarque que level06 fait un execve sur level06.php.
+Ensuite, lorsqu'on regarde ce que fait level06.php, on vois qu'il utilise l'option
+e sur preg_replace ... terrible erreur. la ligne en question que lon va pouvoir
+exploit est:
+$a = preg_replace("/(\[x (.*)\])/e", "y(\"\\2\")", $a);
+l'option e va avoir pour effet d'executer ce qu'il y a dans son second parametre
+et de mettre l'output de cette execution comme second parametre. Le second
+parametre nous indique que le deuxieme match qui est entre des parenthese
+seras passe dans la fonction y(). On va donc s'en servir pour executer du code
+a son insu. Ensuite on vois que notre preg_replace va match avec la chaine suivante
+[x quoi_que_ce_soit]
+et va passer quoi_que_ce_soit dans y. Cependant, en php, on sais que l'on peut
+mettre des variables directement dans des string et c'est ce que l'on va faire.
+Notre but est d'executer system("getflag"); avec ce programme qui a les droit de
+flag06. On va se servir des variable dynamique pour executer ce code.
+En ecrivant ${@system(getflag)} dans notre string, on executera system("getflag")
+et on considereras l'output de system comme le nom d'une variable. Donc on en
+deduit facilement que l'on peut exploit ce programme en lancant le programme
+sur un fichier ayant le contenu suivant:
+[x ${@system(getflag)}]
+Ce qui nous donne cette erreur:
+
+PHP Notice:  Undefined variable: Check flag.Here is your token : wiok45aaoguiboiki2tuin6ub in /home/user/level06/level06.php(4) : regexp code on line 1

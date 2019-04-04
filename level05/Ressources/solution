@@ -1,0 +1,14 @@
+Pour commencer, on remarque dans l'environnement une variable nommer MAIL
+qui contient /var/mail/level05 qui un fichier que l'on peut lire.
+Le fichier contient le contenu suivant:
+*/2 * * * * su -c "sh /usr/sbin/openarenaserver" - flag05
+Cette ligne est une ligne pour cron (un utilitaire qui execute a des moments
+precis) et on en deduit que le flag05 execute toutes les deux minutes la commande
+sh /usr/sbin/openarenaserver
+Si on regarde dans le fichier /usr/sbin/openarenaserver on voit qu'il execute
+tout le contenu de tous les fichiers contenus dans /opt/openarenaserver
+etant donne que le cron execute avec les droits de flag05, il nous suffit de creer
+le fichier /opt/openarenaserver/script avec ce contenu ci:
+  mkdir /tmp/flag05
+  getflag > /tmp/flag05/flag05
+et le flag seras dans /tmp/flag05/flag05

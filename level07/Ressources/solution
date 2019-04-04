@@ -1,0 +1,10 @@
+Pour commencer, si on fait un nm sur level07, on voit qu'il utilise system ce qui
+le rend tres vulnerable. Quand on regarde le fichier a l'aide d'un cat, on remarque
+deux choses: LOGNAME et '/bin/echo %s'. On en deduit donc que le programme va
+remplacer %s par ce qui se trouve dans la variable d'environnement LOGNAME
+donc on va remplacer ce contenu par quelque chose qui executera la commande getflag.
+On essayera donc d'executer la commande '/bin/echo `getflag`' qui aura pour effet
+de faire un echo sur l'output de getflag qui s'executera avec les droit de flag07.
+on procede donc de la maniere suivante:
+export LOGNAME=\`getflag\`
+./level07
