@@ -1,0 +1,13 @@
+Pour commencer on se demande ce que fait le programme level09. On vois qu'il
+obfusque legerement un texte en utilisant l'algorithme suivant:
+un charactere deviens lui meme plus la place a laquelle il se trouve dans le texte
+en ascii. Donc aaaaa deviendras abcde. Ensuite on vois que l'on possede un token
+et vu ce que l'on y vois a l'interrieur, on se doute qu'il a ete obfusque par
+notre level09. On va donc ecrire un programme permettant de faire le job inverse
+du programme level09. On sait aussi par experience que les mot de passe sur ce
+projet font tous 25 charactere donc on s'occupera des 25 premier charactere dun
+fichier donner et on les transformera de abcde en aaaaa.
+On ecriras le programme situe dans test.c que l'on executera sur le fichier token.
+Ce qui nous donne le mot de passe suivant:
+f3iji1ju5yuevaus41q1afiuq
+qui appartient a flag09 biensure.

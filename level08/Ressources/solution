@@ -1,0 +1,17 @@
+Pour ce niveau, quand on lance le binaire, on voit qu'il fait juste un read sur
+un fichier cependant il pretend ne pas avoir les droits pour lire le fichier
+token alors que c'est le cas. Quand on fait un nm sur ce binaire on se rend compte
+qu'il utilise strstr et si on regarde le contenue de la section .data, on
+remarque qu'il y a une chaine qui contient 'token'. Si on fait un rapprochement
+entre ces deux constat, on se doute que le programme cherche la chaine 'token'
+dans notre parametre, et s'il le trouve il pretend ne pas avoir les droits
+sur ce fichier. Pour contourner ce comportement, nous devons donc executer ce
+programme sur ce meme fichier mais avec un nom different. On va donc creer
+un lien symbolique de la maniere suivante:
+
+mkdir /tmp/gdelabro
+ln -s ~/token /tmp/gdelabro/dwq
+
+Puis executer le programme sur ce fichier ce qui nous donne le mot de passe
+suivant qui donne acces au compte flag08:
+quif5eloekouj29ke0vouxean
