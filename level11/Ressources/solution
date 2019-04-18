@@ -1,0 +1,19 @@
+Bon pour commencer ce level, on vois dans le fichier que l'on nous donne qu'un
+programme en lua est en train de tourner sur le port 5151 du localhost.
+Dans ce programme on se rend compte qu'il utilise la ligne suivante:
+prog = io.popen("echo "..pass.." | sha1sum", "r")
+Dans le langage lua, lorsque l'on fait .. ca signifie (avec mes mots) que
+l'on "switch" entre l'inteface string et l'interface variable (si pas compris
+ce seras plus simple a l'oral). Ce qui veut dire que etant donner que la variable
+pass est censee venir de nous, on peut ici y injecter une commande.
+On se retrouve donc avec le schema suivant:
+echo notre_injection | sha1sum
+seulement, on ne pourras pas voir le resultat vu que cette commande est lancee
+cote serveur, cependant le serveur c'est notre machine. Du coup la commande que
+l'on pourrait executer serait celle-ci:
+echo ;getflag > /tmp/token ; echo dqw | sha1sum
+Ici, la variable pass vaut donc `;getflag > /tmp/token ; echo dqw`.
+Ensuite pour communiquer avec le serveur, il nous suffit de faire la commande:
+nc 127.0.0.1 5151
+Et il ne nous reste plus qu'a mettre notre mot de passe et a faire un:
+cat /tmp/token

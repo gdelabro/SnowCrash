@@ -1,0 +1,25 @@
+Pour cet exercice, on remarque que le programme qui est lance sur le port 4646
+lance une commande avec les `` en perl avec une variable qui viens de nous a
+l'interieur:
+@output = `egrep "^$xx" /tmp/xd 2>&1`;
+seulement on ne peut pas mettre une simple commande comme `getflag > /tmp/token`
+dans $xx car il subit deux transformation au paravant qui sont:
+$xx =~ tr/a-z/A-Z/;
+$xx =~ s/\s.*//;
+La premiere a pour but de mettre en majuscule tout ce qui est en minuscule et
+la deuxieme supprime tout ce qu'il y a derriere le premier espace/tabulation/...
+Donc on ne peut pas lancer de commande vu qu'elle ne correspondront a plus rien
+en majuscule. Cependant ce que l'on peut faire cest creer un fichier qui a un nom
+en majuscule comme FILE et de le mettre proche de la racine pour pouvoir y
+acceder facilement. On va donc creer le fichier /tmp/FILE avec les droit d'execution
+et on y mettra a l'interieur la commande que l'on veut executer. Le fichier
+va donc contenir:
+getflag > /tmp/token
+Mais il nous reste a lance notre fichier dans le programme. Pour ca, il suffit
+d'y acceder de la maniere suivante: /*/FILE
+On remarque ici que aucune minuscule n'est a remplacer et le shell ira trouver
+notre fichier tout seul. Donc ce par quoi nous voudrions remplacer $xx serait
+`/*/FILE`
+et on passe la variable de la maniere suivante:
+curl "http://localhost:4646?x=\`/*/FILE\`"
+il n'y a plus qu'a faire un cat sur /tmp/token et le tour est joue

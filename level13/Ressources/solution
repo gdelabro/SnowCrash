@@ -1,0 +1,15 @@
+Lorsqu'on arrive sur le user level13, on a simplement un binaire qui nous dit
+UID 2013 started us but we we expect 4242
+quand on le lance. on vois qu'il n'accepte pas de se lancer parce que nous ne
+sommes pas le bon user. En faisant un nm sur level13, on vois qu'il utilise
+la fonction getuid() pour obtenir notre id. Notre but va donc etre de transformer
+cette fonction pour qu'elle renvoie 4242 a la place de notre vrai id pour tromper
+le programme. Pour y arriver,il suffit simplement d'ecrire un programme avec
+le contenu suivant:
+int getuid(){return(4242);}
+Puis de le compiler de la maniere suivante:
+gcc -shared -o lib.so fichier.c
+Et enfin de faire un export equivalent a ceci:
+export LD_PRELOAD=/notre/path/lib.so
+Seulement le programme ne se laisse pas tromper aussi facilement et il siffiras
+de lancer le programme dans gdb pour obtenir le token du level14

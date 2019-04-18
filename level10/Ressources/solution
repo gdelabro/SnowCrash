@@ -1,0 +1,20 @@
+Pour commencer, on vois que l'on a deux fichier: le level10, un programme qui
+envoie un fichier a une certaine adresse et token qui contient le mot de passe
+de flag10 que l'on ne peut pas lire. En faisant un objdump -s sur level10, on se
+rend compte qu'il va utiliser le port 6969 pour transmettre le fichier a l'adresse
+demande. Ensuite en faisant un nm sur level10, on remarque qu'il utilise
+access pour verifier les droits du fichier que l'on veut envoyer. Notre but va
+donc etre de changer le fichier entre le moment ou le programme check avec
+access et le moment ou il open le fichier puis de recuperer la sortie sur le
+port 6969.
+Pour cela on va lancer trois script tres simple sur trois session differente
+se trouvant dans script1/2/3.sh
+Le script 1 va continuellement creer un lien symbolique /tmp/token qui une fois sur
+deux auras les droits d'ouverture et une autre fois sur deux seras un lien vers
+notre token en esperant que lorsqu'on lance le programme le lien avec les droits
+passe dans acces et celui avec le token passe dans le open.
+Le script 2 va simplement ecouter sur le port 6969 en boucle tandis que le script
+3 va lancer le programme level10 avec notre fichier creer par le script 1 avec
+l'adresse 127.0.0.1
+Et le mot de passe pour le compte flag10 apparaitra environ une fois sur deux
+dans notre boucle du script 2: woupa2yuojeeaaed06riuj63c
