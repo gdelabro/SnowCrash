@@ -1,0 +1,30 @@
+Bon pour ce niveau, le niveau augmente un petit peu. Le level ne nous donne rien.
+Donc on en viens a la conclusion qu'il faut exploit /bin/getflag. Lorsqu'on
+desassemble le programme, on peut voir a un certain endroit en boucle:
+
+8048bf3:       a1 60 b0 04 08          mov    0x804b060,%eax
+8048bf8:       89 c3                   mov    %eax,%ebx
+8048bfa:       c7 04 24 b2 90 04 08    movl   $0x80490b2,(%esp)
+8048c01:       e8 fe f9 ff ff          call   8048604 <ft_des>
+8048c06:       89 5c 24 04             mov    %ebx,0x4(%esp)
+8048c0a:       89 04 24                mov    %eax,(%esp)
+8048c0d:       e8 1e f9 ff ff          call   8048530 <fputs@plt>
+8048c12:       e9 18 02 00 00          jmp    8048e2f <main+0x4e9>
+
+Cette portion de code va en fait chercher a decrypter les password de flag qui
+sont dans la section data. Donc ce qu'on peut faire, c'est copier le binaire,
+le modifier pour choisir ce que l'on veut decrypter comme adresse dans la section
+data puis executer le programme. Pour ce faire voici les etapes:
+Pour commencer, se connecter sur le flag00 avec le password nottoohardhere
+pour bypass la secutrite autour de getflag. Ensuite, copier /bin/getflag dans
+/tmp. ouvrire /tmp/getflag avec vim et lancer sur vim l'option d'edition en
+hexadecimale qui est: :%!xxd puis chercher dans le binaire de la maniere suivante:
+/24b2 Ce qui nous menneras a la decryption du passwd du flag00.
+Maintenant, notre but va etre de transformer l'instruction
+c7 04 24 b2 90 04 08 (load l'adresse du password crypter de flag00) en
+c7 04 24 20 92 04 08 (load l'adresse du password cypyter de flag14).
+Et pour ca il suffit d'ecrire 20 a la place de b2 et 92 a la place de 90 la ou
+vim nous a dirriger. Puis lancer la commande vim :%!xxd -r pour remettre le
+fichier en binaire pour pouvoir ensuite sauvegarder.
+Il suffit maintenant de lancer notre programme copie qui va lire le password de
+flag14 lorsqu'on est log avec flag00.
